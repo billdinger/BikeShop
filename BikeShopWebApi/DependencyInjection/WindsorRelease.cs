@@ -26,7 +26,7 @@ namespace BikeShopWebApi.DependencyInjection
             Dispose(true);
         }
 
-        private bool _disposed = false;
+        private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using BikeShopWebApi.CommerceService.Models;
 using BikeShopWebApi.ProductService.Models;
@@ -21,7 +20,6 @@ namespace BikeShopWebApi.CommerceService
         }
 
 
-
         public void Purchase(Guid cartId)
         {
             if (cartId == Guid.Empty)
@@ -29,7 +27,9 @@ namespace BikeShopWebApi.CommerceService
                 throw new ArgumentNullException(nameof(cartId));
             }
 
-            // DB logic here.
+            Cart cart = Get(cartId);
+            cart.Purchase = true;
+            DbContext.SaveChanges();
         }
 
         public Cart Get(Guid cartId)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading;
+using System.Web;
 using BikeShopWebApi.CommerceService;
 using BikeShopWebApi.CommerceService.Models;
 using BikeShopWebApi.Controllers;
@@ -24,6 +25,8 @@ namespace BikeShopWebApiTests.Controllers
         public void TestSetup()
         {
             Fixture = new Fixture();
+            var cart = Fixture.Create<Cart>();
+
             Fixture.Customize(new ApiControllerCustomization());
             Fixture.Customize(new AutoMoqCustomization());
         }
@@ -136,7 +139,8 @@ namespace BikeShopWebApiTests.Controllers
             // arrange
             Fixture.Customize<Product>(custom => custom.With(product => product.Id, 3));
             Fixture.Freeze<Mock<ICommerceService>>()
-                .Setup(x => x.Add(It.Is<Product>(z => z.Id.Equals(3)), It.IsAny<Guid>()))
+                .Setup(x => 
+                x.Add(It.Is<Product>(z => z.Id.Equals(3)), It.IsAny<Guid>()))
                 .Throws(new Exception(Fixture.Create<string>()));
             var sut = Fixture.Create<CartsController>();
 
@@ -156,7 +160,6 @@ namespace BikeShopWebApiTests.Controllers
             // arrange
             Fixture.Freeze<Mock<ICommerceService>>();
             var sut = Fixture.Create<CartsController>();
-
 
             // act
             var result = sut.Add(null, Fixture.Create<Guid>()).ExecuteAsync(new CancellationToken()).Result;
@@ -244,9 +247,17 @@ namespace BikeShopWebApiTests.Controllers
             // arrange
             Fixture.Freeze<Mock<ICommerceService>>()
                 .Setup(x => x.Purchase(It.IsAny<Guid>()));
-            var sut = Fixture.Create<CartsController>();
+
+            // setup our fake HTTP context
+            Fixture.Freeze<Mock<HttpSessionStateBase>>()
+                .Setup(x => x.SessionID)
+                .Returns(Fixture.Freeze<string>());
+            Fixture.Freeze<Mock<HttpContextBase>>()
+                .Setup(x => x.Session)
+                .Returns(Fixture.Create<HttpSessionStateBase>());
 
             // act
+            var sut = Fixture.Create<CartsController>();
             var result = sut.Post(Fixture.Create<Guid>()).ExecuteAsync(new CancellationToken()).Result;
 
             // assert.
@@ -262,10 +273,17 @@ namespace BikeShopWebApiTests.Controllers
             Fixture.Freeze<Mock<ICommerceService>>()
                 .Setup(x => x.Purchase(It.IsAny<Guid>()))
                 .Throws(new Exception(Fixture.Create<string>()));
-            var sut = Fixture.Create<CartsController>();
 
+            // setup our fake HTTP context
+            Fixture.Freeze<Mock<HttpSessionStateBase>>()
+                .Setup(x => x.SessionID)
+                .Returns(Fixture.Freeze<string>());
+            Fixture.Freeze<Mock<HttpContextBase>>()
+                .Setup(x => x.Session)
+                .Returns(Fixture.Create<HttpSessionStateBase>());
 
             // act
+            var sut = Fixture.Create<CartsController>();
             var result = sut.Post(Fixture.Create<Guid>()).ExecuteAsync(new CancellationToken()).Result;
 
             // assert.

@@ -106,9 +106,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adder\Adder.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Cache\Cache.cs" />
-    <Compile Include="Cache\CacheShim.cs" />
+    <Compile Include="Cache\CacheAdapter.cs" />
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="CommerceService\CommerceDatabaseContext.cs" />
     <Compile Include="CommerceService\DefaultCommerceService.cs" />

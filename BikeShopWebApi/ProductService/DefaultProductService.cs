@@ -38,6 +38,11 @@ namespace BikeShopWebApi.ProductService
         }
 
 
+        /// <summary>
+        /// Returns all the products from our (fake) SOAP endpoint. If they exist in cache, it returns from
+        /// that cache instead.
+        /// </summary>
+        /// <returns>A List of <see cref="T:BikeShopWebApi.ProductService.Models"/></returns>
         public IList<Product> GetAllProducts()
         {
             // Retrieve from Cache if possible.
@@ -70,6 +75,11 @@ namespace BikeShopWebApi.ProductService
             return products;
         }
 
+        /// <summary>
+        /// A query against our (fake) SOAP endpoint to return a specific product.
+        /// </summary>
+        /// <param name="query">A <see cref="T:System.string"/> used to query. cannot be null or empty.</param>
+        /// <returns>A List of <see cref="T:BikeShopWebApi.ProductService.Models"/></returns>
         public IList<Product> Search(string query)
         {
             if (string.IsNullOrEmpty(query))
@@ -113,7 +123,7 @@ namespace BikeShopWebApi.ProductService
             Dispose(true);
         }
 
-        private bool _disposed = false;
+        private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed)

@@ -78,14 +78,12 @@ namespace BikeShopWebApiTests.ProductService
         public void GetAllProducts_VoidInCache_Products()
         {
             //arrange
-
             Fixture.Freeze<Mock<ICache>>()
                 .Setup(x => x.Get<IList<Product>>(It.IsAny<string>()))
                 .Returns(() => Fixture.Create<IList<Product>>());
 
-            var sut = Fixture.Create<DefaultProductService>();
-
             // act
+            var sut = Fixture.Create<DefaultProductService>();
             var result = sut.GetAllProducts();
 
             // assert.

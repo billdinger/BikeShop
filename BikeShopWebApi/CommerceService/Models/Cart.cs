@@ -12,5 +12,7 @@ namespace BikeShopWebApi.CommerceService.Models
         public IList<Product> Products { get; set; }
         
         public DateTime LastModified { get; set; }
+
+        public bool Purchase { get; set; }
     }
 }

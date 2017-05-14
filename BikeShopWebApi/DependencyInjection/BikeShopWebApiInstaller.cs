@@ -43,7 +43,7 @@ namespace BikeShopWebApi.DependencyInjection
             // register our services.
             container.Register(
                 Component.For<ICache>()
-                    .ImplementedBy(typeof(CacheShim))
+                    .ImplementedBy(typeof(CacheAdapter))
                     .LifestyleSingleton(),
                 Component.For<IProductService>()
                     .ImplementedBy(typeof(DefaultProductService))

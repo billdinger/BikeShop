@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Http;
 using BikeShopWebApi.CommerceService;
 using BikeShopWebApi.ProductService.Models;
@@ -6,7 +7,7 @@ using Castle.Core.Logging;
 
 namespace BikeShopWebApi.Controllers
 {
-    [Route("/v1/cart")]
+    [Route("api/v1/cart")]
     public class CartsController : ApiController
     {
 
@@ -14,7 +15,9 @@ namespace BikeShopWebApi.Controllers
 
         private ICommerceService CommerceService { get; }
 
-        public CartsController(ICommerceService commerceService, ILogger logger)
+        private HttpContextBase Context { get; }
+
+        public CartsController(ICommerceService commerceService, ILogger logger, HttpContextBase context)
         {
             if (commerceService == null)
             {
@@ -24,8 +27,13 @@ namespace BikeShopWebApi.Controllers
             {
                 throw new ArgumentNullException(nameof(logger));
             }
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             CommerceService = commerceService;
             Logger = logger;
+            Context = context;
         }
 
         [HttpGet]
@@ -103,6 +111,8 @@ namespace BikeShopWebApi.Controllers
 
             try
             {
+                var sessionSessionId = Context.Session.SessionID;
+                Logger.Info($"Customer {sessionSessionId} purchasing cart {id}");
                 CommerceService.Purchase(id);
                 return Ok();
             }

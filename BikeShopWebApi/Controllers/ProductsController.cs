@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Web;
 using System.Web.Http;
 using BikeShopWebApi.ProductService;
 using Castle.Core.Logging;
 
 namespace BikeShopWebApi.Controllers
 {
-    [Route("/api/v1/products")]
+    [Route("api/v1/products")]
     public class ProductsController : ApiController
     {
         private IProductService ProductService { get; }
 
         private ILogger Logger { get; }
+
 
         public ProductsController(IProductService productService, ILogger logger)
         {
