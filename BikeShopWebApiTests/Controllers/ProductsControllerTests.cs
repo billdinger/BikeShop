@@ -64,7 +64,6 @@ namespace BikeShopWebApiTests.Controllers
                 .Returns(Fixture.Freeze<IList<Product>>());
             var sut = Fixture.Create<ProductsController>();
 
-
             // act
             var result = sut.Get().ExecuteAsync(new CancellationToken()).Result;
 
@@ -82,7 +81,6 @@ namespace BikeShopWebApiTests.Controllers
                 .Throws(new Exception(Fixture.Create<string>()));
             var sut = Fixture.Create<ProductsController>();
 
-
             // act
             var result = sut.Get().ExecuteAsync(new CancellationToken()).Result;
 
@@ -98,7 +96,6 @@ namespace BikeShopWebApiTests.Controllers
             // arrange
             Fixture.Freeze<Mock<IProductService>>();
             var sut = Fixture.Create<ProductsController>();
-
 
             // act
             var result = sut.Search(string.Empty).ExecuteAsync(new CancellationToken()).Result;
@@ -117,7 +114,6 @@ namespace BikeShopWebApiTests.Controllers
                 .Throws(new Exception(Fixture.Create<string>()));
             var sut = Fixture.Create<ProductsController>();
 
-
             // act
             var result = sut.Search(Fixture.Create<string>()).ExecuteAsync(new CancellationToken()).Result;
 
@@ -134,7 +130,6 @@ namespace BikeShopWebApiTests.Controllers
             Fixture.Freeze<Mock<IProductService>>().Setup(x => x.Search(Fixture.Freeze<string>()))
                 .Returns(Fixture.Freeze<IList<Product>>());
             var sut = Fixture.Create<ProductsController>();
-
 
             // act
             var result = sut.Search(Fixture.Create<string>()).ExecuteAsync(new CancellationToken()).Result;

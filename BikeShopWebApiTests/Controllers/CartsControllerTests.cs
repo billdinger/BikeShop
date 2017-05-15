@@ -1,17 +1,23 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Web;
+using System.Web.WebSockets;
 using BikeShopWebApi.CommerceService;
 using BikeShopWebApi.CommerceService.Models;
 using BikeShopWebApi.Controllers;
 using BikeShopWebApi.ProductService.Models;
 using BikeShopWebApiTests.Autofixture;
+using Castle.Services.Logging.Log4netIntegration;
+using log4net.Core;
+using log4net.Repository.Hierarchy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using Ploeh.AutoFixture.Idioms;
+using ILogger = Castle.Core.Logging.ILogger;
 
 namespace BikeShopWebApiTests.Controllers
 {
@@ -25,10 +31,66 @@ namespace BikeShopWebApiTests.Controllers
         public void TestSetup()
         {
             Fixture = new Fixture();
-            var cart = Fixture.Create<Cart>();
 
             Fixture.Customize(new ApiControllerCustomization());
             Fixture.Customize(new AutoMoqCustomization());
+        }
+
+        // used to show what a test looks like without
+        // any mocking framework or mock container.
+        [TestMethod]
+        public void Constructor_AllServicesManually_CartsController()
+        {
+            // arrange
+            var httpRequest = new HttpRequest("", "https://www.vml.com", "");
+            var stringWriter = new StringWriter();
+            var httpResponse = new HttpResponse(stringWriter);
+            var httpContext = new HttpContext(httpRequest, httpResponse);
+            HttpContextBase contextBase = new HttpContextWrapper(httpContext);
+            ICommerceService service = new DefaultCommerceService(new CommerceDatabaseContext());
+            ILogger logger = new Log4netLogger(new RootLogger(Level.Alert),new Log4netFactory() );
+
+            // act
+            var sut = new CartsController(service, logger, contextBase);
+
+            // assert
+            Assert.IsNotNull(sut);
+        }
+
+        /// <summary>
+        /// Used to demonstrate what a test looks like without
+        /// Autofixture
+        /// </summary>
+        [TestMethod]
+        public void Constructor_AllServicesMock_CartsController()
+        {
+            // arrange
+            var mockLogger = new Mock<ILogger>();
+            var mockHttpContext = new Mock<HttpContextBase>();
+            var mockCommerceService = new Mock<ICommerceService>();
+
+            // act
+            var sut =
+                new CartsController(mockCommerceService.Object, mockLogger.Object,
+                mockHttpContext.Object);
+
+            // assert
+            Assert.IsNotNull(sut);
+        }
+
+        
+
+        /// <summary>
+        /// Used to demonstrate difference between autofixture and manually mocking.
+        /// </summary>
+        [TestMethod]
+        public void Constructor_AllServices_CartsController()
+        {
+            // act
+            var sut = Fixture.Create<CartsController>();
+
+            // assert
+            Assert.IsNotNull(sut);
         }
 
         [TestMethod]
@@ -70,7 +132,8 @@ namespace BikeShopWebApiTests.Controllers
 
 
             // act
-            var result = sut.Get(Fixture.Create<Guid>()).ExecuteAsync(new CancellationToken()).Result;
+            var result = sut.Get(Fixture.Create<Guid>())
+                .ExecuteAsync(new CancellationToken()).Result;
 
             // assert.
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
@@ -103,7 +166,6 @@ namespace BikeShopWebApiTests.Controllers
             // arrange
             Fixture.Freeze<Mock<ICommerceService>>();
             var sut = Fixture.Create<CartsController>();
-
 
             // act
             var result = sut.Get(Guid.Empty).ExecuteAsync(new CancellationToken()).Result;
@@ -139,7 +201,7 @@ namespace BikeShopWebApiTests.Controllers
             // arrange
             Fixture.Customize<Product>(custom => custom.With(product => product.Id, 3));
             Fixture.Freeze<Mock<ICommerceService>>()
-                .Setup(x => 
+                .Setup(x =>
                 x.Add(It.Is<Product>(z => z.Id.Equals(3)), It.IsAny<Guid>()))
                 .Throws(new Exception(Fixture.Create<string>()));
             var sut = Fixture.Create<CartsController>();
@@ -289,7 +351,7 @@ namespace BikeShopWebApiTests.Controllers
             // assert.
             Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
             var service = Fixture.Create<Mock<ICommerceService>>();
-            service.Verify(x => x.Purchase( It.IsAny<Guid>()), Times.Once);
+            service.Verify(x => x.Purchase(It.IsAny<Guid>()), Times.Once);
         }
 
         [TestMethod]

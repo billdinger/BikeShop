@@ -102,7 +102,6 @@ namespace BikeShopWebApiTests.ProductService
                     ItExpr.IsAny<CancellationToken>())
                 .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
 
-
             Fixture.Inject<HttpMessageHandler>(handler.Object);
             Fixture.Freeze<Mock<ICache>>()
                 .Setup(x => x.Get<IList<Product>>(It.IsAny<string>()))

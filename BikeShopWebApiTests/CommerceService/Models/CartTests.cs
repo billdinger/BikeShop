@@ -1,4 +1,6 @@
-﻿using BikeShopWebApi.CommerceService.Models;
+﻿using System;
+using BikeShopWebApi.CommerceService.Models;
+using BikeShopWebApi.ProductService.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
@@ -32,6 +34,29 @@ namespace BikeShopWebApiTests.CommerceService.Models
 
             // assert.
             assertion.Verify(props);
+        }
+
+        /// <summary>
+        /// Used to demo the capabilites of autofixtures
+        /// Customize Mechanism.
+        /// </summary>
+        [TestMethod]
+        public void Cart_ModifyBuild()
+        {
+            // arrange
+            Fixture.Customize<Cart>(ob => ob
+                .With(x => x.Purchase, false)
+                .With(gu => gu.CartId, Fixture.Freeze<Guid>())
+                .With(t => t.LastModified, DateTime.MaxValue));
+
+            // act
+            var sut1 = Fixture.Create<Cart>();
+            var sut2 = Fixture.Create<Cart>();
+            
+            // assert.
+            Assert.AreEqual(sut1.Purchase, sut2.Purchase);
+            Assert.AreEqual(sut1.CartId, sut2.CartId);
+            Assert.AreEqual(sut1.LastModified, sut2.LastModified);
         }
     }
 }
