@@ -111,8 +111,11 @@ namespace BikeShopWebApi.Controllers
 
             try
             {
-                var sessionSessionId = Context.Session.SessionID;
-                Logger.Info($"Customer {sessionSessionId} purchasing cart {id}");
+                if (Context.Session != null)
+                {
+                    var sessionId = Context.Session.SessionID;
+                    Logger.Info($"Customer {sessionId} purchasing cart {id}");
+                }
                 CommerceService.Purchase(id);
                 return Ok();
             }

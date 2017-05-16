@@ -16,7 +16,6 @@ namespace BikeShopWebApiTests.DependencyInjection
         public void TestSetup()
         {
             Fixture = new Fixture();
-            //Fixture.Customize(new AutoConfiguredMoqCustomization());
         }
 
         [TestMethod]
