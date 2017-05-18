@@ -55,7 +55,7 @@ namespace BikeShopWebApi.DependencyInjection
             container.Register(
                 Component.For<CommerceDatabaseContext>()
                     .ImplementedBy(typeof(CommerceDatabaseContext))
-                    .LifestyleSingleton());
+                    .LifestyleTransient());
 
             // register our handler, used by the HTTP Client.
             container.Register(
