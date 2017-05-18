@@ -45,6 +45,8 @@ namespace BikeShopWebApi.ProductService
         /// <returns>A List of <see cref="T:BikeShopWebApi.ProductService.Models"/></returns>
         public IList<Product> GetAllProducts()
         {
+
+            throw new NotImplementedException();
             // Retrieve from Cache if possible.
             var cacheItem = Cache.Get<IList<Product>>(AllProductsCacheKey);
             if (cacheItem != null)
