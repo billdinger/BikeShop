@@ -17,7 +17,9 @@ namespace BikeShopWebApi.Controllers
 
         private HttpContextBase Context { get; }
 
-        public CartsController(ICommerceService commerceService, ILogger logger, HttpContextBase context)
+        public CartsController(ICommerceService commerceService, 
+            ILogger logger, 
+            HttpContextBase context)
         {
             if (commerceService == null)
             {

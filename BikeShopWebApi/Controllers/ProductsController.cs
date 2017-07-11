@@ -14,7 +14,8 @@ namespace BikeShopWebApi.Controllers
         private ILogger Logger { get; }
 
 
-        public ProductsController(IProductService productService, ILogger logger)
+        public ProductsController(IProductService productService, 
+            ILogger logger)
         {
             if (productService == null)
             {

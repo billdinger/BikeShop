@@ -5,7 +5,6 @@
     /// </summary>
     public class Adder
     {
-
         public long Add(int x, int z)
         {
             return x + z;
