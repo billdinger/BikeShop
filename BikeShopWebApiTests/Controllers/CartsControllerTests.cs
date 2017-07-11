@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Web;
-using System.Web.WebSockets;
 using BikeShopWebApi.CommerceService;
 using BikeShopWebApi.CommerceService.Models;
 using BikeShopWebApi.Controllers;
@@ -182,7 +181,9 @@ namespace BikeShopWebApiTests.Controllers
             // arrange
             Fixture.Customize<Product>(custom => custom.With(product => product.Id, 3));
             Fixture.Freeze<Mock<ICommerceService>>()
-                .Setup(x => x.Add(It.Is<Product>(z => z.Id.Equals(3)), It.IsAny<Guid>()));
+                .Setup(
+                x => x.Add(
+                    It.Is<Product>(z => z.Id.Equals(3)), It.IsAny<Guid>()));
             var sut = Fixture.Create<CartsController>();
 
 
@@ -275,7 +276,6 @@ namespace BikeShopWebApiTests.Controllers
                 .Setup(x => x.Remove(It.IsAny<Guid>()))
                 .Throws(new Exception(Fixture.Create<string>()));
             var sut = Fixture.Create<CartsController>();
-
 
             // act
             var result = sut.Delete(Fixture.Create<Guid>()).ExecuteAsync(new CancellationToken()).Result;

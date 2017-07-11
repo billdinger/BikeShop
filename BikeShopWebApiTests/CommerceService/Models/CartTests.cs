@@ -1,6 +1,5 @@
 ﻿using System;
 using BikeShopWebApi.CommerceService.Models;
-using BikeShopWebApi.ProductService.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
@@ -12,7 +11,6 @@ namespace BikeShopWebApiTests.CommerceService.Models
     [TestCategory("CommerceService")]
     public class CartTests
     {
-
         private IFixture Fixture { get; set; }
 
         [TestInitialize]

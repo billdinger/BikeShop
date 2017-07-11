@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.Http;
 using BikeShopWebApi.ProductService;
 using Castle.Core.Logging;
@@ -14,8 +13,7 @@ namespace BikeShopWebApi.Controllers
         private ILogger Logger { get; }
 
 
-        public ProductsController(IProductService productService, 
-            ILogger logger)
+        public ProductsController(IProductService productService, ILogger logger)
         {
             if (productService == null)
             {

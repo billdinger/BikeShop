@@ -52,7 +52,8 @@ namespace BikeShopWebApiTests.CommerceService
             Fixture.RepeatCount = 1;
             Fixture.Build<Cart>().With(z => z.CartId, Fixture.Freeze<Guid>());
             var dbset = CreateDbSetMock(Fixture.Create<IList<Cart>>());
-            Fixture.Inject<CommerceDatabaseContext>(new CommerceDatabaseContext() { Carts = dbset.Object });
+            Fixture.Inject<CommerceDatabaseContext>(
+                new CommerceDatabaseContext() { Carts = dbset.Object });
 
             // act
             var sut = Fixture.Create<DefaultCommerceService>();
