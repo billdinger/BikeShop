@@ -2,7 +2,7 @@
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace BikeShopWebApiTests.Autofixture
 {

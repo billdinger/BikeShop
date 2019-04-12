@@ -8,9 +8,9 @@ using BikeShopWebApi.ProductService.Models;
 using BikeShopWebApiTests.Autofixture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
-using Ploeh.AutoFixture.Idioms;
+using AutoFixture;
+using AutoFixture.AutoMoq;
+using AutoFixture.Idioms;
 
 namespace BikeShopWebApiTests.CommerceService
 {

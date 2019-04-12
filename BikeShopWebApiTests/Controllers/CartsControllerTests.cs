@@ -13,9 +13,9 @@ using log4net.Core;
 using log4net.Repository.Hierarchy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
-using Ploeh.AutoFixture.Idioms;
+using AutoFixture;
+using AutoFixture.AutoMoq;
+using AutoFixture.Idioms;
 using ILogger = Castle.Core.Logging.ILogger;
 
 namespace BikeShopWebApiTests.Controllers

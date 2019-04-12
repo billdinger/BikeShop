@@ -1,9 +1,9 @@
 ﻿using System;
 using BikeShopWebApi.CommerceService.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
-using Ploeh.AutoFixture.Idioms;
+using AutoFixture;
+using AutoFixture.AutoMoq;
+using AutoFixture.Idioms;
 
 namespace BikeShopWebApiTests.CommerceService.Models
 {
@@ -17,7 +17,7 @@ namespace BikeShopWebApiTests.CommerceService.Models
         public void TestSetup()
         {
             Fixture = new Fixture();
-            Fixture.Customize(new AutoConfiguredMoqCustomization());
+            Fixture.Customize(new AutoMoqCustomization(){ConfigureMembers = true});
         }
 
         [TestMethod]

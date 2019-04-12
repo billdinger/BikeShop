@@ -2,9 +2,9 @@
 using BikeShopWebApi.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
-using Ploeh.AutoFixture.Idioms;
+using AutoFixture;
+using AutoFixture.AutoMoq;
+using AutoFixture.Idioms;
 
 namespace BikeShopWebApiTests.DependencyInjection
 {
@@ -18,7 +18,7 @@ namespace BikeShopWebApiTests.DependencyInjection
         public void TestSetup()
         {
             Fixture = new Fixture();
-            Fixture.Customize(new AutoConfiguredMoqCustomization());
+            Fixture.Customize(new AutoMoqCustomization(){ConfigureMembers = true});
         }
 
         [TestMethod]

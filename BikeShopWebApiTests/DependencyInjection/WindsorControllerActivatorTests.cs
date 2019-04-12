@@ -1,8 +1,8 @@
 ﻿using BikeShopWebApi.DependencyInjection;
 using Castle.Windsor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Idioms;
+using AutoFixture;
+using AutoFixture.Idioms;
 
 namespace BikeShopWebApiTests.DependencyInjection
 {
